@@ -22,9 +22,14 @@ class RegistrationController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $validated = $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'phonenumber' => ['required', 'string', 'max:255'],
+            'adress' => ['required', 'string', 'max:255'],
+            'zip_code' => ['required', 'string', 'max:255'],
+            'city' => ['required', 'string', 'max:255']
         ]);
 
         $validated['password'] = Hash::make($validated['password']);

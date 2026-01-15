@@ -3,8 +3,63 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Performance;
+use App\Models\Hall;
 
 class PerformanceController extends Controller
 {
-    //
+    public function index()
+    {
+        $performances = Performance::all();
+        return view('performances.index', compact('performances'));
+    }
+
+    public function show(Performance $performance)
+    {
+        return view('performances.show', compact('performance'));
+    }
+
+    public function create()
+    {
+        $performances = Performance::all();
+        $halls = Hall::all();
+        return view('performances.create', compact('performances', 'halls'));
+    }
+
+    public function store(Request $request)
+    {
+        $performance = new Performance();
+        $performance->datetime = $request->datetime;
+        $performance->available_seats = $request->available_seats;
+
+
+        $performance->hall_id = $request->hall_id;
+        $performance->movie_id = $request->movie_id;
+        $performance->save();
+
+        return redirect()->route('performances.index')->with('success', 'Performance succesvol aangemaakt.');
+    }
+
+    public function edit(Performance $performance)
+    {
+        $halls = Hall::all();
+        return view('performances.edit', compact('performance', 'halls'));
+    }
+
+    public function update(Request $request, Performance $performance)
+    {
+        $performance->datetime = $request->datetime;
+        $performance->available_seats = $request->available_seats;
+        $performance->hall_id = $request->hall_id;
+        $performance->movie_id = $request->movie_id;
+        $performance->save();
+
+        return redirect()->route('performances.index')->with('success', 'Performance succesvol bijgewerkt.');
+    }   
+
+    public function destroy(Performance $performance)
+    {
+        $performance->delete();
+        return redirect()->route('performances.index')->with('success', 'Performance succesvol verwijderd.');
+    }
 }

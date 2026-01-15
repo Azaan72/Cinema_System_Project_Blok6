@@ -4,6 +4,7 @@ use App\Http\Controllers\Settings;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
+use App\Http\Controllers\PerformanceController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -32,6 +33,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('movies/{movie}/edit', [MovieController::class, 'edit'])->name('movies.edit');
     Route::put('movies/{movie}', [MovieController::class, 'update'])->name('movies.update');
     Route::delete('movies/{movie}', [MovieController::class, 'destroy'])->name('movies.destroy');
+
+    Route::get('performances/create', [PerformanceController::class, 'create'])->name('performances.create');
+    Route::post('performances', [PerformanceController::class, 'store'])->name('performances.store');
+    Route::get('performances/{performance}/edit', [PerformanceController::class, 'edit'])->name('performances.edit');
+    Route::put('performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
+    Route::delete('performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
     });
     
     Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
@@ -39,5 +46,9 @@ Route::middleware(['auth'])->group(function () {
     
     Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
     Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
+
+
+    Route::get('performances', [PerformanceController::class, 'index'])->name('performances.index');
+    Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
 
 require __DIR__.'/auth.php';

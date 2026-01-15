@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PerformanceController;
+use App\Http\Controllers\HallController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,6 +40,12 @@ Route::middleware(['auth'])->group(function () {
     Route::get('performances/{performance}/edit', [PerformanceController::class, 'edit'])->name('performances.edit');
     Route::put('performances/{performance}', [PerformanceController::class, 'update'])->name('performances.update');
     Route::delete('performances/{performance}', [PerformanceController::class, 'destroy'])->name('performances.destroy');
+
+    Route::get('halls/create', [HallController::class, 'create'])->name('halls.create');
+    Route::post('halls', [HallController::class, 'store'])->name('halls.store');
+    Route::get('halls/{hall}/edit', [HallController::class, 'edit'])->name('halls.edit');
+    Route::put('halls/{hall}', [HallController::class, 'update'])->name('halls.update');
+    Route::delete('halls/{hall}', [HallController::class, 'destroy'])->name('halls.destroy');
     });
     
     Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
@@ -50,5 +57,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('performances', [PerformanceController::class, 'index'])->name('performances.index');
     Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+
+
+    Route::get('halls', [HallController::class, 'index'])->name('halls.index');
+    Route::get('halls/{hall}', [HallController::class, 'show'])->name('halls.show');
 
 require __DIR__.'/auth.php';

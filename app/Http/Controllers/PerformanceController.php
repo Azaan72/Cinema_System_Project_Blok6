@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PerformanceStoreRequest;
+use App\Http\Requests\PerformanceUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Performance;
 use App\Models\Hall;
@@ -26,7 +28,7 @@ class PerformanceController extends Controller
         return view('performances.create', compact('performances', 'halls'));
     }
 
-    public function store(Request $request)
+    public function store(PerformanceStoreRequest $request)
     {
         $performance = new Performance();
         $performance->datetime = $request->datetime;
@@ -46,7 +48,7 @@ class PerformanceController extends Controller
         return view('performances.edit', compact('performance', 'halls'));
     }
 
-    public function update(Request $request, Performance $performance)
+    public function update(PerformanceUpdateRequest $request, Performance $performance)
     {
         $performance->datetime = $request->datetime;
         $performance->available_seats = $request->available_seats;

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\MoviesStoreRequest;
-use App\Http\Requests\MoviesUpdateRequest;
+use App\Http\Requests\MovieStoreRequest;
+use App\Http\Requests\MovieUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Genre;
@@ -33,7 +33,7 @@ class MovieController extends Controller
         return view('movies.create', compact('genres', 'performances'));
     }
 
-    public function store(MoviesStoreRequest $request, Movie $movie)
+    public function store(MovieStoreRequest $request, Movie $movie)
     {
         $movie = new Movie();
         $movie->title = $request->title;
@@ -60,7 +60,7 @@ class MovieController extends Controller
         return view('movies.edit', compact('movie', 'genres', 'performances'));
     }
 
-    public function update(MoviesUpdateRequest $request, Movie $movie)
+    public function update(MovieUpdateRequest $request, Movie $movie)
     {
         $movie = Movie::find($movie->id);
 

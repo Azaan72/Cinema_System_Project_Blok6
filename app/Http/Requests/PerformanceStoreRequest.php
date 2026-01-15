@@ -25,7 +25,6 @@ class PerformanceStoreRequest extends FormRequest
             'datetime' => 'required|date',
             'available_seats' => 'required|integer|min:0',
             'hall_id' => 'required|exists:halls,id',
-            'movie_id' => 'required|exists:movies,id',
         ];
     }
 }

@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('performances', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('datetime');  
+            $table->dateTime('datetime');
             $table->integer('available_seats');
-            $table->foreignId('hall_id')->constrained()->nullOnDelete();      
-            $table->foreignId('movie_id')->constrained()->nullOnDelete();
+            $table->foreignId('hall_id')->constrained()->nullOnDelete();
+            $table->foreignId('movie_id')->nullable()->constrained()->nullOnDelete();
             $table->timestamps();
         });
     }

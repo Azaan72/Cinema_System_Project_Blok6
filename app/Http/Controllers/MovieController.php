@@ -21,8 +21,28 @@ class MovieController extends Controller
         $tickets = Ticket::all();
 
 
+        $movies = Movie::query();
+        // Filter op genre als er één geselecteerd is
+        if ($request->filled('genre_id')) {
+            $movies->whereHas('genres', function ($q) use ($request) {
+                $q->where('genres.id', $request->genre_id);
+            });
+        }
 
-        return view('movies.index', compact('movies', 'genres' ,'tickets'));
+        // Filter op ticketprijs (optioneel)
+        if ($request->filled('min_price') || $request->filled('max_price')) {
+            $minPrice = $request->input('min_price', 0); // standaard 0
+            $maxPrice = $request->input('max_price', PHP_INT_MAX); // standaard oneindig
+
+            $movies->whereHas('performances.tickets', function ($q) use ($minPrice, $maxPrice) {
+                $q->whereBetween('price', [$minPrice, $maxPrice]);
+            });
+        }
+
+        $movies = $movies->get();
+
+
+        return view('movies.index', compact('movies', 'genres', 'tickets'));
     }
 
     public function show(Movie $movie)

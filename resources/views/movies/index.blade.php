@@ -32,6 +32,19 @@
                    value="{{ request('max_price') }}">
         </div>
 
+        <!-- Leeftijdsgrens -->
+        <div class="flex flex-col">
+            <label for="age_limit" class="font-medium">Leeftijdsgrens</label>
+            <select name="age_limit" id="age_limit" class="border border-gray-300 rounded p-2">
+                <option value="">-- Alle leeftijden --</option>
+                @foreach([0, 6, 12, 16, 18] as $age)
+                    <option value="{{ $age }}" {{ request('age_limit') == $age ? 'selected' : '' }}>
+                        {{ $age == 0 ? 'Geen' : $age . '+' }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
         <!-- Submit button -->
         <div>
             <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
@@ -58,6 +71,11 @@
                             <span class="italic text-gray-400">Onbekend</span>
                         @endif
                     </p>
+
+                     <!-- Leeftijdsgrens -->
+                <p class="text-sm text-gray-600">
+                    Leeftijdsgrens: {{ $movie->age_limit }}+
+                </p>
 
                     <!-- Tickets -->
                     <div class="mt-2">

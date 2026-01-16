@@ -29,6 +29,11 @@ class MovieController extends Controller
             });
         }
 
+        // Filter op leeftijdsgrens
+        if ($request->filled('age_limit')) {
+            $movies->where('age_limit', '<=', $request->age_limit);
+        }
+
         // Filter op ticketprijs (optioneel)
         if ($request->filled('min_price') || $request->filled('max_price')) {
             $minPrice = $request->input('min_price', 0); // standaard 0

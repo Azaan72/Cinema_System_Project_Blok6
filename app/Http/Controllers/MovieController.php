@@ -7,8 +7,10 @@ use App\Http\Requests\MovieUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Movie;
 use App\Models\Genre;
+use App\Models\Ticket;
 
 use App\Models\Performance;
+use Database\Seeders\TicketSeeder;
 
 class MovieController extends Controller
 {
@@ -16,23 +18,11 @@ class MovieController extends Controller
     {
         $movies = Movie::all();
         $genres = Genre::all();
-
-
-        $movies = Movie::with('genres');
-
-        // Filteren op meerdere genres
-        if ($request->filled('genres')) {
-            $selectedGenres = $request->genres;
-            $movies = $movies->whereHas('genres', function ($q) use ($selectedGenres) {
-                $q->whereIn('genres.id', $selectedGenres); // fix hier
-            });
-        }
-
-        $movies = $movies->get();
+        $tickets = Ticket::all();
 
 
 
-        return view('movies.index', compact('movies', 'genres'));
+        return view('movies.index', compact('movies', 'genres' ,'tickets'));
     }
 
     public function show(Movie $movie)

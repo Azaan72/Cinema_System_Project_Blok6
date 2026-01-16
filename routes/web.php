@@ -6,6 +6,7 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\HallController;
+use App\Http\Controllers\TicketController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -46,6 +47,13 @@ Route::middleware(['auth'])->group(function () {
     Route::get('halls/{hall}/edit', [HallController::class, 'edit'])->name('halls.edit');
     Route::put('halls/{hall}', [HallController::class, 'update'])->name('halls.update');
     Route::delete('halls/{hall}', [HallController::class, 'destroy'])->name('halls.destroy');
+
+
+    Route::get('tickets/create', [TicketController::class, 'create'])->name('tickets.create');
+    Route::post('tickets', [TicketController::class, 'store'])->name('tickets.store');
+    Route::get('tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
+    Route::put('tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
+    Route::delete('tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     });
     
     Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
@@ -61,5 +69,9 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('halls', [HallController::class, 'index'])->name('halls.index');
     Route::get('halls/{hall}', [HallController::class, 'show'])->name('halls.show');
+
+
+    Route::get('tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
 
 require __DIR__.'/auth.php';

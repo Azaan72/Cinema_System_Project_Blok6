@@ -20,6 +20,8 @@ class TicketSeeder extends Seeder
                 ['price' => 8.00,  'seat' => 'Rij 2A', 'performance_id' => 2],
                 ['price' => 15.00, 'seat' => 'Rij 2B', 'performance_id' => 2],
             ];
-        Ticket::insert($tickets);
+        foreach ($tickets as $data) {
+            Ticket::create($data);
+        }
     }
 }

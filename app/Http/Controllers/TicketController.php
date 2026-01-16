@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\TicketStoreRequest;
+use App\Http\Requests\TicketUpdateRequest;
 use Illuminate\Http\Request;
 use App\Models\Ticket;
 use App\Models\Performance;
@@ -25,7 +27,7 @@ class TicketController extends Controller
         return view('tickets.create', compact('performances'));
     }
 
-    public function store(Request $request)
+    public function store(TicketStoreRequest $request)
     {
         $ticket = new Ticket();
         $ticket->price = $request->price;
@@ -42,7 +44,7 @@ class TicketController extends Controller
         return view('tickets.edit', compact('ticket', 'performances'));
     }
 
-    public function update(Request $request, Ticket $ticket)
+    public function update(TicketUpdateRequest $request, Ticket $ticket)
     {
         $ticket->price = $request->price;
         $ticket->seat = $request->seat;

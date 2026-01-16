@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Http\Requests\UsersStoreRequest;
+use App\Http\Requests\UsersUpdateRequest;
 use App\Models\User;
 
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ class UserController extends Controller
         return view('users.create');
     }
 
-    public function store(Request $request)
+    public function store(UsersStoreRequest $request)
     {
         $user = new User();
         $user->firstname = $request->firstname;
@@ -46,7 +48,7 @@ class UserController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    public function update(Request $request, User $user)
+    public function update(UsersUpdateRequest $request, User $user)
     {
         $user->firstname = $request->firstname;
         $user->lastname = $request->lastname;

@@ -91,13 +91,13 @@
 
         <!-- Validatie errors -->
         @if ($errors->any())
-            <div class="mt-4 bg-red-100 text-red-800 p-4 rounded">
-                <ul class="list-disc pl-5">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
+        <div class="alert alert-danger mt-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-red-600">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
         @endif
     </div>
 </x-base-layout>

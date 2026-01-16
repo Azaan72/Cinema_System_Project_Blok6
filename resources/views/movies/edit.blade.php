@@ -93,4 +93,14 @@
             <button onclick="this.parentElement.remove()" class="ml-4 font-bold text-green-800">&times;</button>
         </div>
     @endif
+
+            @if ($errors->any())
+        <div class="alert alert-danger mt-4">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li class="text-red-600">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
 </x-base-layout>

@@ -12,10 +12,26 @@ use App\Models\Performance;
 
 class MovieController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $movies = Movie::all();
         $genres = Genre::all();
+
+
+        $movies = Movie::with('genres');
+
+        // Filteren op meerdere genres
+        if ($request->filled('genres')) {
+            $selectedGenres = $request->genres;
+            $movies = $movies->whereHas('genres', function ($q) use ($selectedGenres) {
+                $q->whereIn('genres.id', $selectedGenres); // fix hier
+            });
+        }
+
+        $movies = $movies->get();
+
+
+
         return view('movies.index', compact('movies', 'genres'));
     }
 

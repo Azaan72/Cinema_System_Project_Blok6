@@ -5,11 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Database\Seeders\MovieSeeder;
-use Database\Seeders\GenreSeeder;
-use Database\Seeders\PerformanceSeeder;
-use Database\Seeders\HallSeeder;
-use Database\Seeders\TicketSeeder;
+
 
 
 class DatabaseSeeder extends Seeder
@@ -39,6 +35,7 @@ class DatabaseSeeder extends Seeder
             MovieSeeder::class,
             PerformanceSeeder::class,
             TicketSeeder::class,
+            UserSeeder::class,
         ]);
     }
 }

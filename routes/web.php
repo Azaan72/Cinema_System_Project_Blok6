@@ -7,6 +7,7 @@ use App\Http\Controllers\MovieController;
 use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\UserController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -54,8 +55,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('tickets/{ticket}/edit', [TicketController::class, 'edit'])->name('tickets.edit');
     Route::put('tickets/{ticket}', [TicketController::class, 'update'])->name('tickets.update');
     Route::delete('tickets/{ticket}', [TicketController::class, 'destroy'])->name('tickets.destroy');
+
+
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+    Route::post('users', [UserController::class, 'store'])->name('users.store');
+    Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
+    
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
     });
     
+
     Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
     Route::get('genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
     

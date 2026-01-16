@@ -1,4 +1,25 @@
 <x-base-layout>
+    <x-slot name="title">Voorstellingen</x-slot>
+
+    <!-- Tijd filter -->
+    <form method="GET" action="{{ route('performances.index') }}" class="mb-4 flex items-end gap-4">
+
+        <!-- Tijd filter -->
+        <div class="flex flex-col">
+            <label for="time" class="font-medium">Tijd</label>
+            <input type="time" name="time" id="time"
+                   class="border p-2 rounded"
+                   value="{{ request('time') }}">
+        </div>
+
+        <div>
+            <button type="submit" class="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700">
+                Filter
+            </button>
+        </div>
+    </form>
+
+
     <div class="flex flex-wrap -m-2">
         @foreach ($performances as $performance)
             <a href="{{ route('performances.show', $performance->id) }}" class="m-2 w-1/4">

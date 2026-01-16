@@ -10,9 +10,21 @@ use App\Models\Hall;
 
 class PerformanceController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $performances = Performance::all();
+
+
+        
+        $performances = Performance::query();
+        if ($request->filled('time')) {
+            $time = $request->time; // bv. "21:00"
+
+            // filter op HH:MM met SQLite strftime
+            $performances->whereRaw("strftime('%H:%M', datetime) = ?", [$time]);
+        }
+
+        $performances = $performances->get();
         return view('performances.index', compact('performances'));
     }
 
@@ -57,7 +69,7 @@ class PerformanceController extends Controller
         $performance->save();
 
         return redirect()->route('performances.index')->with('success', 'Performance succesvol bijgewerkt.');
-    }   
+    }
 
     public function destroy(Performance $performance)
     {

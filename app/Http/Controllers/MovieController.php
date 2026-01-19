@@ -16,38 +16,43 @@ class MovieController extends Controller
 {
     public function index(Request $request)
     {
-        $movies = Movie::all();
         $genres = Genre::all();
-        $tickets = Ticket::all();
-
 
         $movies = Movie::query();
-        // Filter op genre als er één geselecteerd is
+
+        // Genre
         if ($request->filled('genre_id')) {
             $movies->whereHas('genres', function ($q) use ($request) {
                 $q->where('genres.id', $request->genre_id);
             });
         }
 
-        // Filter op leeftijdsgrens
-        if ($request->filled('age_limit')) {
-            $movies->where('age_limit', '<=', $request->age_limit);
+        // Leeftijd (veilig)
+        if ($request->filled('age_limit') && !in_array((int)$request->age_limit, [0, 18])) {
+            $age = (int) $request->age_limit;
+
+            $movies->where(function ($q) use ($age) {
+                $q->where('age_limit', '<=', $age)
+                    ->orWhereNull('age_limit');
+            });
         }
 
-        // Filter op ticketprijs (optioneel)
+        // Prijs (SQL-proof, geen relation magic)
         if ($request->filled('min_price') || $request->filled('max_price')) {
-            $minPrice = $request->input('min_price', 0); // standaard 0
-            $maxPrice = $request->input('max_price', PHP_INT_MAX); // standaard oneindig
+            $min = $request->min_price ?? 0;
+            $max = $request->max_price ?? 10000;
 
-            $movies->whereHas('performances.tickets', function ($q) use ($minPrice, $maxPrice) {
-                $q->whereBetween('price', [$minPrice, $maxPrice]);
+            $movies->whereIn('id', function ($q) use ($min, $max) {
+                $q->select('performances.movie_id')
+                    ->from('tickets')
+                    ->join('performances', 'tickets.performance_id', '=', 'performances.id')
+                    ->whereBetween('tickets.price', [$min, $max]);
             });
         }
 
         $movies = $movies->get();
 
-
-        return view('movies.index', compact('movies', 'genres', 'tickets'));
+        return view('movies.index', compact('movies', 'genres'));
     }
 
     public function show(Movie $movie)

@@ -9,7 +9,7 @@
             <div>
                 <label for="title" class="block text-sm font-medium text-gray-700">Filmtitel</label>
                 <input type="text" name="title" id="title" required
-                    class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100">
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-indigo-500 focus:border-indigo-500 bg-gray-100">
             </div>
 
             <!-- Duur -->

@@ -8,6 +8,7 @@ use App\Http\Controllers\PerformanceController;
 use App\Http\Controllers\HallController;
 use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,29 +62,32 @@ Route::middleware(['auth'])->group(function () {
     Route::get('users/create', [UserController::class, 'create'])->name('users.create');
     Route::post('users', [UserController::class, 'store'])->name('users.store');
     Route::get('users/{user}', [UserController::class, 'show'])->name('users.show');
-    
+
     Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
     Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
     Route::delete('users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-    });
-    
 
-    Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
-    Route::get('genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
-    
-    Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
-    Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
+    Route::get('/films-dashboard', [DashboardController::class, 'films'])->name('films.dashboard');
+    Route::get('/films-dashboard/pdf', [DashboardController::class, 'filmsPdf'])->name('dashboard.films.pdf');
+});
 
 
-    Route::get('performances', [PerformanceController::class, 'index'])->name('performances.index');
-    Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+Route::get('genres', [GenreController::class, 'index'])->name('genres.index');
+Route::get('genres/{genre}', [GenreController::class, 'show'])->name('genres.show');
+
+Route::get('movies', [MovieController::class, 'index'])->name('movies.index');
+Route::get('movies/{movie}', [MovieController::class, 'show'])->name('movies.show');
 
 
-    Route::get('halls', [HallController::class, 'index'])->name('halls.index');
-    Route::get('halls/{hall}', [HallController::class, 'show'])->name('halls.show');
+Route::get('performances', [PerformanceController::class, 'index'])->name('performances.index');
+Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
 
 
-    Route::get('tickets', [TicketController::class, 'index'])->name('tickets.index');
-    Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+Route::get('halls', [HallController::class, 'index'])->name('halls.index');
+Route::get('halls/{hall}', [HallController::class, 'show'])->name('halls.show');
 
-require __DIR__.'/auth.php';
+
+Route::get('tickets', [TicketController::class, 'index'])->name('tickets.index');
+Route::get('tickets/{ticket}', [TicketController::class, 'show'])->name('tickets.show');
+
+require __DIR__ . '/auth.php';

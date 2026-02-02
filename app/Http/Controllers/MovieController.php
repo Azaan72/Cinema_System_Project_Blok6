@@ -125,7 +125,7 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->genres()->detach();
-        $movie->delete();
+        $movie->delete();   
         return redirect()->route('movies.index')->with('success', 'Movie succesvol verwijderd.');
     }
 }
